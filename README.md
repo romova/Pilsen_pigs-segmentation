@@ -14,13 +14,16 @@ Výsledky experimentů ukazují, že navržené modely dosahují velmi dobré kv
 - obsahuje implementace navržených metod modified 3D U-Net a 2D-to-3D U-Net a ukázkové kody s jejich využitím.
 
 Ukázka segmetnace metodou 2D-to-3D U-Net na datasetu 3D-Ircad (zleva: původní snímek a maska cévního stromu, segmentace pozadí, segmentace popředí):
+
 ![2D-unet-cevy](https://github.com/user-attachments/assets/c573756f-607b-4963-ab73-5060b4b6874d)
 
 Ukázka segmetnace metodou modified 3D U-Net na datasetu Deepvesselnet:
+
 ![3D_UNET_deep](https://github.com/user-attachments/assets/86bea882-2842-4333-8195-fd0db2693f51)
 
 ### 3D Slicer module
 - obsahuje implementaci navržené metody do aplikace 3D Slicer a návod jak zpravoznit extension na vlastním PC.
-- ![3D_UNET_ukazka](https://github.com/user-attachments/assets/180615a9-9349-4990-98d3-3db55f70fb9d)
+
+![3D_UNET_ukazka](https://github.com/user-attachments/assets/180615a9-9349-4990-98d3-3db55f70fb9d)
 
 
