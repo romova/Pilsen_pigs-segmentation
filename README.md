@@ -1,4 +1,4 @@
-# Segmentation of Domestic Pig Vessels in Computed Tomography Images
+# Segmentace cév prasete domácího ve snímcích z výpočetní tomografie
 ## Segmentation of Domestic Pig Vessels in Computed Tomography Images
 
 Repozitář byl vytvořen v rámci diplomová práce, které se zaměřuje na návrh metody segmentace cév v dutině břišní u prasete domácího a její implementaci do běžně používaného medicínského vizualizačního nástroje 3DSlicer. Využitím segmentačních metod používaných v oblasti medicínského zobrazování poskytuje důležité informace o anatomických strukturách, čímž podporuje plánování chirurgických zákroků, předoperačních a pooperačních vyšetření a studium standardní anatomie prasete domácího.
