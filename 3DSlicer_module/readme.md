@@ -1,8 +1,8 @@
 # Návod: Vložení modulu `3D_Unet_vessels` do prostředí 3D Slicer
 
 ## 1. Stažení modulu
-1. Stáhněte komprimovaný soubor `Pilsen_pigs_segmentator.zip` z GitHub repozitáře:  
-2. Rozbalte celý obsah ZIP archivu.
+1. Stáhněte komprimovaný soubor `Pilsen_pigs_segmentator.zip` z url: https://drive.google.com/file/d/1RdgGSxtEDBqsdI5olgNPm6q_OWW6k5Og/view?usp=sharing  
+3. Rozbalte celý obsah ZIP archivu.
 
 ## 2. Inicializace v 3D Sliceru
 1. Otevřete aplikaci **3D Slicer**.
