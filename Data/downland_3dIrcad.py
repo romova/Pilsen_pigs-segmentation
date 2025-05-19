@@ -16,7 +16,7 @@ def extract_zip(zip_path, extract_to):
     print("Rozbalení dokončeno.")
 
 # URL datasetu
-url = "https://www.ircad.fr/research/data-sets/liver-segmentation-3d-ircadb-01/downland"
+url = "https://cloud.ircad.fr/index.php/s/JN3z7EynBiwYyjy/download"
 
 # Cesty k souborům
 dpath = "data"
@@ -34,10 +34,24 @@ if response.status_code == 200:
             file.write(chunk)
     print(f"Dataset byl úspěšně stažen jako {output_file}")
     
-    # Rozbalení souboru
+    # Bezpečné rozbalení ZIP souboru, včetně vnořených adresářů
     print("Rozbaluji dataset...")
+
+    def is_within_directory(directory, target):
+        abs_directory = os.path.abspath(directory)
+        abs_target = os.path.abspath(target)
+        return os.path.commonpath([abs_directory]) == os.path.commonpath([abs_directory, abs_target])
+
+    def safe_extract(zip_file, path="."):
+        for member in zip_file.namelist():
+            member_path = os.path.join(path, member)
+            if not is_within_directory(path, member_path):
+                raise Exception("Nebezpečný soubor v ZIP archivu!")
+        zip_file.extractall(path)
+
     with zipfile.ZipFile(output_file, 'r') as zip_ref:
-        zip_ref.extractall(dpath)
+        safe_extract(zip_ref, dpath)
+
     print(f"Dataset byl úspěšně rozbalen do {dpath}")
 else:
     print(f"Chyba při stahování! Status code: {response.status_code}")
