@@ -2,8 +2,20 @@ import requests
 import zipfile
 import os
 
+def is_within_directory(directory, target):
+    abs_directory = os.path.abspath(directory)
+    abs_target = os.path.abspath(target)
+    return os.path.commonpath([abs_directory]) == os.path.commonpath([abs_directory, abs_target])
+
+def safe_extract(zip_file, path="."):
+    for member in zip_file.namelist():
+        member_path = os.path.join(path, member)
+        if not is_within_directory(path, member_path):
+            raise Exception("Nebezpečný soubor v ZIP archivu!")
+    zip_file.extractall(path)
+
 def extract_zip(zip_path, extract_to):
-    """Rozbalí ZIP soubor do zvolené složky."""
+    """Rozbalí ZIP soubor do zvolené složky a rekurzivně i všechny ZIPy uvnitř."""
     if not os.path.exists(zip_path):
         print(f"Soubor {zip_path} neexistuje!")
         return
@@ -12,8 +24,17 @@ def extract_zip(zip_path, extract_to):
     
     print(f"Rozbaluji {zip_path} do {extract_to}...")
     with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(extract_to)
-    print("Rozbalení dokončeno.")
+        safe_extract(zip_ref, extract_to)
+    print(f"Rozbaleno: {zip_path}")
+
+    # Rekurzivní rozbalení ZIPů uvnitř
+    for root, _, files in os.walk(extract_to):
+        for file in files:
+            if file.endswith(".zip"):
+                nested_zip_path = os.path.join(root, file)
+                nested_extract_to = os.path.splitext(nested_zip_path)[0]
+                if not os.path.exists(nested_extract_to):
+                    extract_zip(nested_zip_path, nested_extract_to)
 
 # URL datasetu
 url = "https://cloud.ircad.fr/index.php/s/JN3z7EynBiwYyjy/download"
@@ -33,31 +54,9 @@ if response.status_code == 200:
         for chunk in response.iter_content(chunk_size=8192):
             file.write(chunk)
     print(f"Dataset byl úspěšně stažen jako {output_file}")
-    
-    # Bezpečné rozbalení ZIP souboru, včetně vnořených adresářů
-    print("Rozbaluji dataset...")
 
-    def is_within_directory(directory, target):
-        abs_directory = os.path.abspath(directory)
-        abs_target = os.path.abspath(target)
-        return os.path.commonpath([abs_directory]) == os.path.commonpath([abs_directory, abs_target])
+    # Rozbalení ZIPu + všech vnořených ZIPů
+    extract_zip(output_file, dpath)
 
-    def safe_extract(zip_file, path="."):
-        for member in zip_file.namelist():
-            member_path = os.path.join(path, member)
-            if not is_within_directory(path, member_path):
-                raise Exception("Nebezpečný soubor v ZIP archivu!")
-        zip_file.extractall(path)
-
-    with zipfile.ZipFile(output_file, 'r') as zip_ref:
-        safe_extract(zip_ref, dpath)
-
-    print(f"Dataset byl úspěšně rozbalen do {dpath}")
 else:
     print(f"Chyba při stahování! Status code: {response.status_code}")
-
-
-# Příklad použití
-zip_file = "ircad_dataset.zip"
-destination_folder = "ircad_dataset"
-extract_zip(zip_file, destination_folder)
