@@ -19,7 +19,7 @@ def extract_zip(zip_path, extract_to):
 url = "https://www.ircad.fr/research/data-sets/liver-segmentation-3d-ircadb-01/downland"
 
 # Cesty k souborům
-dpath = ""
+dpath = "data"
 os.makedirs(dpath, exist_ok=True)
 output_file = os.path.join(dpath, "ircad_dataset.zip")
 
