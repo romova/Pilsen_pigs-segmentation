@@ -16,10 +16,10 @@ def extract_zip(zip_path, extract_to):
     print("Rozbalení dokončeno.")
 
 # URL datasetu
-url = "https://cloud.ircad.fr/s/o7ggwdagy5Tfpf4/download"
+url = "https://www.ircad.fr/research/data-sets/liver-segmentation-3d-ircadb-01/downland"
 
 # Cesty k souborům
-dpath = "2D_to_3D/data/pigs"
+dpath = ""
 os.makedirs(dpath, exist_ok=True)
 output_file = os.path.join(dpath, "ircad_dataset.zip")
 
@@ -44,6 +44,6 @@ else:
 
 
 # Příklad použití
-zip_file = "2D_to_3D/data/pigs/ircad_dataset.zip"
-destination_folder = "2D_to_3D/data/pilsen_pigs"
+zip_file = "ircad_dataset.zip"
+destination_folder = "ircad_dataset"
 extract_zip(zip_file, destination_folder)
